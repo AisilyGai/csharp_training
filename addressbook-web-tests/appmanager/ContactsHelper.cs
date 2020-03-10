@@ -16,10 +16,31 @@ namespace WebAddressbookTests
     {
         public bool acceptNextAlert = true;
 
-        public ContactsHelper(IWebDriver driver) : base(driver)
+        public ContactsHelper(ApplicationManager manager) 
+            : base(manager)
         {
         }
-        public void FillContactsForm(ContactsData contacts)
+
+        public ContactsHelper CreateC(ContactsData contacts)
+        {
+            manager.Navigator.GoToNewContactsPage();
+            FillContactsForm(contacts);
+            SubmitContactsCreation();
+            ReturnToContactsPage();
+            return this;
+        }
+
+        public ContactsHelper RemoveTwo(int v)
+        {
+            manager.Navigator.GoToContactsPage();
+            SelectContacts(1);
+            RemoveContacts();
+            ReturnToContactsPage();
+            return this;
+
+        }
+
+        public ContactsHelper FillContactsForm(ContactsData contacts)
         {
             driver.FindElement(By.Name("firstname")).Click();
             driver.FindElement(By.Name("firstname")).Clear();
@@ -30,28 +51,33 @@ namespace WebAddressbookTests
             driver.FindElement(By.Name("lastname")).Click();
             driver.FindElement(By.Name("lastname")).Clear();
             driver.FindElement(By.Name("lastname")).SendKeys(contacts.Last_name);
+            return this;
         }
 
-        public void SubmitContactsCreation()
+        public ContactsHelper SubmitContactsCreation()
         {
             driver.FindElement(By.XPath("(//input[@name='submit'])[2]")).Click();
+            return this;
         }
 
-        public void ReturnToContactsPage()
+        public ContactsHelper ReturnToContactsPage()
         {
             driver.FindElement(By.LinkText("home")).Click();
             driver.FindElement(By.LinkText("Logout")).Click();
+            return this;
         }
 
-        public void SelectContacts(int index)
+        public ContactsHelper SelectContacts(int index)
         {
             driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + index + "]")).Click();
+            return this;
         }
 
-        public void RemoveContacts()
+        public ContactsHelper RemoveContacts()
         {
             driver.FindElement(By.XPath("//input[@value='Delete']")).Click();
             Assert.IsTrue(Regex.IsMatch(CloseAlertAndGetItsText(), "^Delete 1 addresses[\\s\\S]$"));
+            return this;
         }
 
         public string CloseAlertAndGetItsText()
