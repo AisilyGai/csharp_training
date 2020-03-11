@@ -30,10 +30,22 @@ namespace WebAddressbookTests
             return this;
         }
 
-        public ContactsHelper RemoveTwo(int v)
+        public ContactsHelper ModifyContacts(int p, ContactsData newData)
         {
             manager.Navigator.GoToContactsPage();
-            SelectContacts(1);
+            SelectContacts(p);
+            InitGroupModification();
+            FillContactsForm(newData);
+            SubmitContactsModification();
+            ReturnToContactsPage();
+            return this;
+        }
+
+
+        public ContactsHelper RemoveTwo(int p)
+        {
+            manager.Navigator.GoToContactsPage();
+            SelectContacts(p);
             RemoveContacts();
             ReturnToContactsPage();
             return this;
@@ -79,6 +91,19 @@ namespace WebAddressbookTests
             Assert.IsTrue(Regex.IsMatch(CloseAlertAndGetItsText(), "^Delete 1 addresses[\\s\\S]$"));
             return this;
         }
+
+        public ContactsHelper SubmitContactsModification()
+        {
+            driver.FindElement(By.Name("update")).Click();
+            return this;
+        }
+
+        public ContactsHelper InitGroupModification()
+        {
+            driver.FindElement(By.XPath("//img[@alt='Edit']")).Click();
+            return this;
+        }
+
 
         public string CloseAlertAndGetItsText()
         {
