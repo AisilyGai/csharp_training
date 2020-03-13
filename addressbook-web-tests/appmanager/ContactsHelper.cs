@@ -30,10 +30,9 @@ namespace WebAddressbookTests
             return this;
         }
 
-        public ContactsHelper ModifyContacts(int p, ContactsData newData)
+        public ContactsHelper ModifyContacts(ContactsData newData)
         {
             manager.Navigator.GoToContactsPage();
-            SelectContacts(p);
             InitGroupModification();
             FillContactsForm(newData);
             SubmitContactsModification();
