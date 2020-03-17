@@ -41,10 +41,9 @@ namespace WebAddressbookTests
         }
 
 
-        public ContactsHelper RemoveTwo(int p)
+        public ContactsHelper RemoveTwo()
         {
             manager.Navigator.GoToContactsPage();
-            SelectContacts(p);
             RemoveContacts();
             ReturnToContactsPage();
             return this;
@@ -53,17 +52,12 @@ namespace WebAddressbookTests
 
         public ContactsHelper FillContactsForm(ContactsData contacts)
         {
-            driver.FindElement(By.Name("firstname")).Click();
-            driver.FindElement(By.Name("firstname")).Clear();
-            driver.FindElement(By.Name("firstname")).SendKeys(contacts.First_name);
-            driver.FindElement(By.Name("middlename")).Click();
-            driver.FindElement(By.Name("middlename")).Clear();
-            driver.FindElement(By.Name("middlename")).SendKeys(contacts.Middle_name);
-            driver.FindElement(By.Name("lastname")).Click();
-            driver.FindElement(By.Name("lastname")).Clear();
-            driver.FindElement(By.Name("lastname")).SendKeys(contacts.Last_name);
+            Type(By.Name("firstname"),contacts.First_name);
+            Type(By.Name("middlename"), contacts.Middle_name);
+            Type(By.Name("lastname"), contacts.Last_name);
             return this;
         }
+
 
         public ContactsHelper SubmitContactsCreation()
         {

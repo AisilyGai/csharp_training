@@ -34,6 +34,7 @@ namespace WebAddressbookTests
 
         public void GoToContactsPage()
         {
+            if()
             driver.FindElement(By.LinkText("home")).Click();
         }
     }
