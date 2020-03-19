@@ -15,6 +15,7 @@ namespace WebAddressbookTests
         [Test]
         public void ContactsCreateTest()
         {
+            app.Contacts.CheckeContact();
             ContactsData newData = new ContactsData("ContactsModifiedData");
             newData.Middle_name = null;
             newData.Last_name = null;

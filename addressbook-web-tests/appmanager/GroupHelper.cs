@@ -72,7 +72,6 @@ namespace WebAddressbookTests
         public GroupHelper ReturnToGroupsPage()
         {
             driver.FindElement(By.LinkText("group page")).Click();
-            driver.FindElement(By.LinkText("Logout")).Click();
             return this;
         }
 
@@ -99,5 +98,16 @@ namespace WebAddressbookTests
             driver.FindElement(By.Name("edit")).Click();
             return this;
         }
+
+        public void CheckeGroup(int p)
+        {
+            if (!IsElementPresent(By.XPath("//input[@name='select[]'])[" + p + "]")))
+            {
+                GroupData group = new GroupData("nnn");
+                CreateG(group);
+
+            }
+        }
+
     }
 }

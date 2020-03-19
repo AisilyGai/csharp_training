@@ -41,9 +41,10 @@ namespace WebAddressbookTests
         }
 
 
-        public ContactsHelper RemoveTwo()
+        public ContactsHelper RemoveTwo(int p)
         {
             manager.Navigator.GoToContactsPage();
+            SelectContacts(p);
             RemoveContacts();
             ReturnToContactsPage();
             return this;
@@ -68,7 +69,6 @@ namespace WebAddressbookTests
         public ContactsHelper ReturnToContactsPage()
         {
             driver.FindElement(By.LinkText("home")).Click();
-            driver.FindElement(By.LinkText("Logout")).Click();
             return this;
         }
 
@@ -95,6 +95,16 @@ namespace WebAddressbookTests
         {
             driver.FindElement(By.XPath("//img[@alt='Edit']")).Click();
             return this;
+        }
+
+        public void CheckeContact()
+        {
+            if (!IsElementPresent(By.XPath("//img[@alt='Edit']")))
+            {
+                ContactsData contacts = new ContactsData("nnn");
+                CreateC(contacts);
+
+            }
         }
 
 
