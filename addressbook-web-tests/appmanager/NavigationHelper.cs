@@ -43,6 +43,11 @@ namespace WebAddressbookTests
 
         public void GoToContactsPage()
         {
+            if (driver.Url == "http://localhost/addressbook/edit.php")
+            {
+                return;
+            }
+
             driver.FindElement(By.LinkText("home")).Click();
         }
     }
