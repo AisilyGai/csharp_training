@@ -20,7 +20,12 @@ namespace WebAddressbookTests
             newData.Middle_name = null;
             newData.Last_name = null;
 
+            List<ContactsData> oldContacts = app.Contacts.GetContactsList();
+
             app.Contacts.ModifyContacts(newData);
+
+            List<ContactsData> newContacts = app.Contacts.GetContactsList();
+            Assert.AreEqual(oldContacts.Count, newContacts.Count);
         }
     }
 }

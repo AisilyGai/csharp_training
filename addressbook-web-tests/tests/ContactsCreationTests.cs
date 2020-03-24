@@ -2,6 +2,7 @@
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
+using System.Collections.Generic;
 using NUnit.Framework;
 
 namespace WebAddressbookTests
@@ -16,7 +17,15 @@ namespace WebAddressbookTests
             contacts.Middle_name = "ddd";
             contacts.Last_name = "fff";
 
+            List<ContactsData> oldContacts = app.Contacts.GetContactsList();
+
             app.Contacts.CreateC(contacts);
+
+            List<ContactsData> newContacts = app.Contacts.GetContactsList();
+            oldContacts.Add(contacts);
+            oldContacts.Sort();
+            newContacts.Sort();
+            Assert.AreEqual(oldContacts, newContacts);
         }
 
         [Test]
@@ -26,7 +35,12 @@ namespace WebAddressbookTests
             contacts.Middle_name = "";
             contacts.Last_name = "";
 
+            List<ContactsData> oldContacts = app.Contacts.GetContactsList();
+
             app.Contacts.CreateC(contacts);
+
+            List<ContactsData> newContacts = app.Contacts.GetContactsList();
+            Assert.AreEqual(oldContacts.Count + 1, newContacts.Count);
         }
 
     }
