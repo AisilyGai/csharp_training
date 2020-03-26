@@ -40,7 +40,10 @@ namespace WebAddressbookTests
             app.Contacts.CreateC(contacts);
 
             List<ContactsData> newContacts = app.Contacts.GetContactsList();
-            Assert.AreEqual(oldContacts.Count + 1, newContacts.Count);
+            oldContacts.Add(contacts);
+            oldContacts.Sort();
+            newContacts.Sort();
+            Assert.AreEqual(oldContacts, newContacts);
         }
 
     }

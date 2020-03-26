@@ -112,9 +112,18 @@ namespace WebAddressbookTests
             List<ContactsData> contacts = new List<ContactsData>();
             manager.Navigator.GoToContactsPage();
             ICollection<IWebElement> elements = driver.FindElements(By.XPath("//tr[@name='entry']"));
+            //var rows = driver.FindElement(By.XPath(Patch("//tr[@name='entry']"));
             foreach (IWebElement element in elements)
             {
-                contacts.Add(new ContactsData(element.Text));
+                var cells = element.FindElements(By.XPath("./td"));
+                var last_name = cells[1].Text;
+                var first_name = cells[2].Text;
+
+                //var first_name = element.Text.Split(' ')[0];
+                //string last_name1 = element.FindElements(By.XPath("./td"))[2].Text;
+                //var last_name = element.Text.Split(' ')[1];
+                ContactsData contact = new ContactsData(first_name, last_name);
+                contacts.Add(contact);
             }
             return contacts;
         }
