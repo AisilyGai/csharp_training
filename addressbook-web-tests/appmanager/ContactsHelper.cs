@@ -63,6 +63,7 @@ namespace WebAddressbookTests
         public ContactsHelper SubmitContactsCreation()
         {
             driver.FindElement(By.XPath("(//input[@name='submit'])[2]")).Click();
+            contactsCache = null;
             return this;
         }
 
@@ -82,12 +83,14 @@ namespace WebAddressbookTests
         {
             driver.FindElement(By.XPath("//input[@value='Delete']")).Click();
             Assert.IsTrue(Regex.IsMatch(CloseAlertAndGetItsText(), "^Delete 1 addresses[\\s\\S]$"));
+            contactsCache = null;
             return this;
         }
 
         public ContactsHelper SubmitContactsModification()
         {
             driver.FindElement(By.Name("update")).Click();
+            contactsCache = null;
             return this;
         }
 
@@ -107,25 +110,46 @@ namespace WebAddressbookTests
             }
         }
 
+        private List<ContactsData> contactsCache = null;
+
         public List<ContactsData> GetContactsList()
         {
-            List<ContactsData> contacts = new List<ContactsData>();
-            manager.Navigator.GoToContactsPage();
-            ICollection<IWebElement> elements = driver.FindElements(By.XPath("//tr[@name='entry']"));
-            //var rows = driver.FindElement(By.XPath(Patch("//tr[@name='entry']"));
-            foreach (IWebElement element in elements)
+            if (contactsCache == null)
             {
-                var cells = element.FindElements(By.XPath("./td"));
-                var last_name = cells[1].Text;
-                var first_name = cells[2].Text;
-
-                //var first_name = element.Text.Split(' ')[0];
-                //string last_name1 = element.FindElements(By.XPath("./td"))[2].Text;
-                //var last_name = element.Text.Split(' ')[1];
-                ContactsData contact = new ContactsData(first_name, last_name);
-                contacts.Add(contact);
+                contactsCache = new List<ContactsData>();
+                manager.Navigator.GoToContactsPage();
+                ICollection<IWebElement> elements = driver.FindElements(By.XPath("//tr[@name='entry']"));
+                foreach (IWebElement element in elements)
+                {
+                    var cells = element.FindElements(By.XPath("./td"));
+                    var last_name = cells[1].Text;
+                    var first_name = cells[2].Text;
+                    //contactsCache.contact = new ContactsData(first_name, last_name)
+                    contactsCache.Add(new ContactsData(first_name, last_name)
+                    {
+                        Id = element.FindElement(By.TagName("input")).GetAttribute("vlue")
+                        //contactsCache.Add(new ContactsData(element.Text));
+                    });
+                }
             }
-            return contacts;
+
+            //List<ContactsData> contacts = new List<ContactsData>();
+            //manager.Navigator.GoToContactsPage();
+            //ICollection<IWebElement> elements = driver.FindElements(By.XPath("//tr[@name='entry']"));
+            //foreach (IWebElement element in elements)
+            //{
+            //    var cells = element.FindElements(By.XPath("./td"));
+            //    var last_name = cells[1].Text;
+            //    var first_name = cells[2].Text;
+            //    ContactsData contact = new ContactsData(first_name, last_name);
+            //    contacts.Add(contact);
+            //}
+            return new List<ContactsData>(contactsCache);
+        }
+
+        public int GetContactsCount()
+        {
+            return driver.FindElements(By.XPath("//tr[@name='entry']")).Count;
         }
 
 
