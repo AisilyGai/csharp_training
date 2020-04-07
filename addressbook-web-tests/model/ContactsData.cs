@@ -8,9 +8,10 @@ using System.Text.RegularExpressions;
 namespace WebAddressbookTests
 {
     public class ContactsData : IEquatable<ContactsData>, IComparable<ContactsData>
-{
+    {
         private string allPhones;
         private string allEmails;
+        private string allInformations;
         //private string first_name;
         //private string middle_name = "";
         //private string last_name = "";
@@ -55,7 +56,7 @@ namespace WebAddressbookTests
             }
             if (Last_name.CompareTo(other.Last_name) == 0)
                 return First_name.CompareTo(other.First_name);
-            
+
             return Last_name.CompareTo(other.Last_name);
         }
         public string First_name { get; set; }
@@ -74,6 +75,8 @@ namespace WebAddressbookTests
         public string Email { get; set; }
         public string Email2 { get; set; }
         public string Email3 { get; set; }
+
+        public string Id { get; set; }
 
         public string AllPhones
         {
@@ -100,7 +103,7 @@ namespace WebAddressbookTests
             {
                 return "";
             }
-            return Regex.Replace(phone, "[ -()]", "") + "\r\n";
+            return Regex.Replace(phone, "[ -() ]", "") + "\r\n";
         }
 
         public string AllEmails
@@ -121,7 +124,17 @@ namespace WebAddressbookTests
                 allEmails = value;
             }
         }
-
-        public string Id { get; set; }
+        // метод для очистки данных от лишних скобок()-
+        public string AllInformations
+        {
+            get
+            {
+                return (CleanUp(allInformations)).Trim();
+            }
+            set
+            {
+                allInformations = value;
+            }
+        }
     }
 }

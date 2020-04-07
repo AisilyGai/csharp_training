@@ -129,26 +129,13 @@ namespace WebAddressbookTests
                     var cells = element.FindElements(By.XPath("./td"));
                     var last_name = cells[1].Text;
                     var first_name = cells[2].Text;
-                    //contactsCache.contact = new ContactsData(first_name, last_name)
                     contactsCache.Add(new ContactsData(first_name, last_name)
                     {
                         Id = element.FindElement(By.TagName("input")).GetAttribute("vlue")
-                        //contactsCache.Add(new ContactsData(element.Text));
                     });
                 }
             }
 
-            //List<ContactsData> contacts = new List<ContactsData>();
-            //manager.Navigator.GoToContactsPage();
-            //ICollection<IWebElement> elements = driver.FindElements(By.XPath("//tr[@name='entry']"));
-            //foreach (IWebElement element in elements)
-            //{
-            //    var cells = element.FindElements(By.XPath("./td"));
-            //    var last_name = cells[1].Text;
-            //    var first_name = cells[2].Text;
-            //    ContactsData contact = new ContactsData(first_name, last_name);
-            //    contacts.Add(contact);
-            //}
             return new List<ContactsData>(contactsCache);
         }
 
@@ -172,14 +159,14 @@ namespace WebAddressbookTests
             {
                 Address = address,
                 AllPhones = allPhones,
-                AllEmails = allEmails
+                AllEmails = allEmails,
             };
         }
 
         public ContactsData GetContactInformationFromEditForm(int index)
         {
             manager.Navigator.GoToHomePage();
-            InitGroupModification();
+            InitContactModifition(0);
             string first_name = driver.FindElement(By.Name("firstname")).GetAttribute("value");
             string last_name = driver.FindElement(By.Name("lastname")).GetAttribute("value");
             string address = driver.FindElement(By.Name("address")).GetAttribute("value");
@@ -200,8 +187,35 @@ namespace WebAddressbookTests
                 WorkPhone = workPhone,
                 Email = email,
                 Email2 = email2,
-                Email3 = email3
+                Email3 = email3,
+           //Склейка данных со страницы редактирования контакта
+                AllInformations = first_name + last_name + "\r\n" + address + "\r\n\r\n" + AdaptationPhone(homePhone)
+                + AdaptationPhone(mobilePhone) + AdaptationPhone(workPhone) + "\r\n" + email + "\r\n" + email2 + "\r\n" + email3
             };
+            //Проверка телефонов для установки H: W: M:
+            string AdaptationPhone(string Phone)
+            {
+                if (Phone != "")
+                {
+                    if (Phone == homePhone || Phone == mobilePhone)
+                    {
+                        if (Phone == homePhone)
+                        {
+                            return "H:" + Phone + "\r\n";
+                        }
+                        return "M:" + Phone + "\r\n";
+                    }
+                    return "W:" + Phone + "\r\n";
+                }
+                return Phone;
+            }
+        }
+
+        public void InitContactModifition(int index)
+        {
+            driver.FindElements(By.Name("entry"))[index]
+                .FindElements(By.TagName("td"))[7]
+                .FindElement(By.TagName("a")).Click();
         }
 
         public int GetNumberOfSearchResults()
@@ -211,8 +225,29 @@ namespace WebAddressbookTests
             Match m = new Regex(@"\d+").Match(text);
             return Int32.Parse(m.Value);
         }
+        //Склейка данных со страницы свойств контакта
+        public ContactsData GetContactInformationFromDetailed(int index)
+        {
+            manager.Navigator.GoToHomePage();
+            InitContactDetailed(0);
 
+            string DetailedInformation = driver.FindElement(By.CssSelector("div#content")).Text;
+            string first_name = "";
+            string last_name = "";
 
+            return new ContactsData(first_name, last_name)
+            {
+
+                AllInformations = DetailedInformation
+            };
+        }
+        //Переход на страницу свойств контакта
+        public void InitContactDetailed(int index)
+        {
+            driver.FindElements(By.Name("entry"))[index]
+                .FindElements(By.TagName("td"))[6]
+                .FindElement(By.TagName("a")).Click();
+        }
         public string CloseAlertAndGetItsText()
         {
             try
