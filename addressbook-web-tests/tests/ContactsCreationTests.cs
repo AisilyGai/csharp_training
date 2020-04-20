@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -23,8 +24,24 @@ namespace WebAddressbookTests
             }
             return contacts;
         }
-        
-        [Test, TestCaseSource("RandomContactsDataProvider")]
+
+        public static IEnumerable<ContactsData> ContactsDataFromFile()
+        {
+            List<ContactsData> contacts = new List<ContactsData>();
+            string[] lines = File.ReadAllLines(@"contacts.csv");
+            foreach (string l in lines)
+            {
+                string[] parts = l.Split(',');
+                contacts.Add(new ContactsData(parts[0])
+                {
+                    Last_name = parts[1],
+                    First_name = parts[2]
+                });
+            }
+            return contacts;
+        }
+
+        [Test, TestCaseSource("ContactsDataFromFile")]
         public void ContactsCreateTest(ContactsData contacts)
         {
             //ContactsData contacts = new ContactsData("aaa");
