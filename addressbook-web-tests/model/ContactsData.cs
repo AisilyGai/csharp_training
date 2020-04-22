@@ -16,6 +16,10 @@ namespace WebAddressbookTests
         //private string middle_name = "";
         //private string last_name = "";
 
+        public ContactsData()
+        {
+        }
+
         public ContactsData(string first_name)
         {
             First_name = first_name;

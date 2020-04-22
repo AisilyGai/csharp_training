@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfContactsData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <ContactsData>
+    <First_name>)6INO2</First_name>
+    <Last_name>Sa\0</Last_name>
+    <AllPhones />
+    <AllEmails />
+    <AllInformations />
+  </ContactsData>
+  <ContactsData>
+    <First_name>+J*GFD&amp;)</First_name>
+    <Last_name>Y;?_A++P</Last_name>
+    <AllPhones />
+    <AllEmails />
+    <AllInformations />
+  </ContactsData>
+</ArrayOfContactsData>
