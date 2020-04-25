@@ -42,6 +42,16 @@ namespace WebAddressbookTests
             return this;
         }
 
+        //public ContactsHelper ModifyToBe(ContactsData contact, ContactsData newData)
+        //{
+        //    manager.Navigator.GoToContactsPage();
+        //    InitGroupModification();
+        //    FillContactsForm(newData);
+        //    SubmitContactsModification();
+        //    ReturnToContactsPage();
+        //    return this;
+        //}
+
 
         public ContactsHelper RemoveTwo(int p)
         {
@@ -52,6 +62,17 @@ namespace WebAddressbookTests
             return this;
 
         }
+
+        public ContactsHelper RemoveC(ContactsData contact)
+        {
+            manager.Navigator.GoToContactsPage();
+
+            SelectContacts(contact.Id);
+            RemoveContacts();
+            ReturnToContactsPage();
+            return this;
+        }
+
 
         public ContactsHelper FillContactsForm(ContactsData contacts)
         {
@@ -78,6 +99,12 @@ namespace WebAddressbookTests
         public ContactsHelper SelectContacts(int index)
         {
             driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + (index+1) + "]")).Click();
+            return this;
+        }
+
+        public ContactsHelper SelectContacts(string id)
+        {
+            driver.FindElement(By.XPath("(//input[@name='selected[]' and @value='"+id+"'])")).Click();
             return this;
         }
 

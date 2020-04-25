@@ -12,7 +12,7 @@ using NUnit.Framework;
 namespace WebAddressbookTests
 {
     [TestFixture]
-    public class ContactsCreateTests : AuthTestBase
+    public class ContactsCreateTests : ContactsTestBase
     {
         public static IEnumerable<ContactsData> RandomContactsDataProvider()
         {
@@ -74,6 +74,20 @@ namespace WebAddressbookTests
             oldContacts.Sort();
             newContacts.Sort();
             Assert.AreEqual(oldContacts, newContacts);
+        }
+
+        [Test]
+        public void TestContactsDBConnectivity()
+        {
+            DateTime start = DateTime.Now;
+            List<ContactsData> fromUi = ContactsData.GetAllContact();
+            DateTime end = DateTime.Now;
+            System.Console.Out.WriteLine(end.Subtract(start));
+
+            start = DateTime.Now;
+            List<ContactsData> fromDB = ContactsData.GetAllContact();
+            end = DateTime.Now;
+            System.Console.Out.WriteLine(end.Subtract(start));
         }
 
         //[Test]

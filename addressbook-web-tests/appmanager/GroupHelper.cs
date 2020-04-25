@@ -38,6 +38,18 @@ namespace WebAddressbookTests
             return this;
         }
 
+        public GroupHelper ModifyToBe(GroupData group, GroupData newData)
+        {
+            manager.Navigator.GoToGroupsPage();
+            SelectGroup(group.Id);
+            InitGroupModification();
+            FillGroupFrom(newData);
+            SubmitGroupModification();
+            ReturnToGroupsPage();
+            return this;
+        }
+
+
 
         public GroupHelper Remove(int p)
         {
@@ -48,6 +60,15 @@ namespace WebAddressbookTests
             return this;
         }
 
+        public GroupHelper RemoveG(GroupData group)
+        {
+            manager.Navigator.GoToGroupsPage();
+
+            SelectGroup(group.Id);
+            RemoveGroup();
+            ReturnToGroupsPage();
+            return this;
+        }
         public GroupHelper InitGroupCreation()
         {
             driver.FindElement(By.Name("new")).Click();
@@ -82,6 +103,13 @@ namespace WebAddressbookTests
             return this;
         }
 
+        public GroupHelper SelectGroup(string id)
+        {
+            driver.FindElement(By.XPath("(//input[@name='selected[]' and @value='"+id+"'])")).Click();
+            return this;
+        }
+
+
         public GroupHelper RemoveGroup()
         {
             driver.FindElement(By.Name("delete")).Click();
@@ -104,7 +132,7 @@ namespace WebAddressbookTests
 
         public void CheckeGroup(int p)
         {
-            if (!IsElementPresent(By.XPath("//input[@name='select[]'])[" + (1+p) + "]")))
+            if (!IsElementPresent(By.XPath("//input[@name='select[]'])[" + (p+1) + "]")))
             {
                 GroupData group = new GroupData("nnn");
                 CreateG(group);
