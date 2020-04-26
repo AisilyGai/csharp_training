@@ -12,10 +12,22 @@ namespace WebAddressbookTests
         [Test]
         public void TestAddingContactToGroup()
         {
+            app.Contacts.ContactsProv();
+            app.Groups.GroupProv();
+
             GroupData group = GroupData.GetAllGroup()[0];
             List<ContactsData> oldList = group.GetContacts();
             ContactsData contact = ContactsData.GetAllContact().Except(oldList).First();
 
+            for (int i = 0; i < oldList.Count(); i++)
+            {
+                if (oldList[i].Id.Equals(contact.Id))
+                {
+                    contact = new ContactsData("aaa", "ddd");
+                    app.Contacts.CreateC(contact);
+                    contact.Id = app.Contacts.GetContactId();
+                }
+            }
             app.Contacts.AddContactToGroup(contact, group);
 
             List<ContactsData> newList = group.GetContacts();
@@ -28,11 +40,17 @@ namespace WebAddressbookTests
         [Test]
         public void TestdeleteContactFromGroups()
         {
+            app.Contacts.ContactsProv();
+            app.Groups.GroupProv();
+
             GroupData group = GroupData.GetAllGroup()[0];
             List<ContactsData> oldList = group.GetContacts();
             ContactsData contact = ContactsData.GetAllContact().First();
 
-
+            if (group.GetContacts().Count() == 0)
+            {
+                app.Contacts.AddContactToGroup(contact, group);
+            }
             app.Contacts.DeleteContactFromFroup(contact, group);
 
             List<ContactsData> newList = group.GetContacts();

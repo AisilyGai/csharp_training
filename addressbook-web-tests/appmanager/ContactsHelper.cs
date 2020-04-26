@@ -17,14 +17,13 @@ namespace WebAddressbookTests
     {
         public bool acceptNextAlert = true;
 
-        public ContactsHelper(ApplicationManager manager) 
-            : base(manager)
+        public ContactsHelper(ApplicationManager manager) : base(manager)
         {
         }
 
         internal void AddContactToGroup(ContactsData contact, GroupData group)
         {
-            manager.Navigator.GoToContactsPage();
+            manager.Navigator.GoToHomePage();
             ClearGroupFilter();
             SelectContactToGroups(contact.Id);
             SelectGroupToAdd(group.Name);
@@ -55,7 +54,7 @@ namespace WebAddressbookTests
 
         public void DeleteContactFromFroup(ContactsData contact, GroupData group)
         {
-            manager.Navigator.GoToContactsPage();
+            manager.Navigator.GoToHomePage();
             GroupFilter(group.Name);
             SelectContactToGroups(contact.Id);
             SelectGroupToAdd(group.Name);
@@ -128,7 +127,7 @@ namespace WebAddressbookTests
         public ContactsHelper FillContactsForm(ContactsData contacts)
         {
             Type(By.Name("firstname"),contacts.First_name);
-            Type(By.Name("middlename"), contacts.Middle_name);
+            //Type(By.Name("middlename"), contacts.Middle_name);
             Type(By.Name("lastname"), contacts.Last_name);
             return this;
         }
@@ -325,6 +324,25 @@ namespace WebAddressbookTests
             driver.FindElements(By.Name("entry"))[index]
                 .FindElements(By.TagName("td"))[6]
                 .FindElement(By.TagName("a")).Click();
+        }
+
+        public void ContactsProv()
+        {
+            if (IsElementPresent(By.XPath("//img[@alt='Edit']")))
+            {
+                return;
+            }
+
+            ContactsData contact = new ContactsData("aaa", "zzz");
+            CreateC(contact);
+
+            manager.Navigator.GoToHomePage();
+        }
+
+        public string GetContactId()
+        {
+            manager.Navigator.GoToHomePage();
+            return driver.FindElements(By.XPath("//tr/td/input[@name='selected[]']")).Last().GetAttribute("value");
         }
         public string CloseAlertAndGetItsText()
         {

@@ -182,6 +182,20 @@ namespace WebAddressbookTests
             //}
             return new List<GroupData>(groupCache);
         }
+        public void GroupProv()
+        {
+            if (IsElementPresent(By.Name("selected[]")))
+            {
+                return;
+            }
+
+            GroupData group = new GroupData("aaa");
+            group.Header = "bbb";
+            group.Footer = "ccc";
+            CreateG(group);
+
+            manager.Navigator.GoToGroupsPage();
+        }
 
         public int GetGroupCount()
         {
