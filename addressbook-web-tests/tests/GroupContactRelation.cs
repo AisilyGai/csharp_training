@@ -7,7 +7,7 @@ using LinqToDB.Mapping;
 
 namespace WebAddressbookTests
 {
-    [Table(Name ="adress_in_groups")]
+    [Table(Name ="address_in_groups")]
     public class GroupContactRelation
     {
         [Column(Name = "group_id")]
