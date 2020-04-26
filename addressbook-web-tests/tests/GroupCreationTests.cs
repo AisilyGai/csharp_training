@@ -81,51 +81,60 @@ namespace WebAddressbookTests
         [Test]
         public void TestGroupDBConnectivity()
         {
-            DateTime start = DateTime.Now;
-            List<GroupData> fromUi = app.Groups.GetGroupList();
-            DateTime end = DateTime.Now;
-            System.Console.Out.WriteLine(end.Subtract(start));
-
-            start = DateTime.Now;
-            List<GroupData> fromDb = GroupData.GetAllGroup();
-            end = DateTime.Now;
-            System.Console.Out.WriteLine(end.Subtract(start));
+            foreach (ContactsData contact in ContactsData.GetAllContact())
+            {
+                System.Console.Out.WriteLine(contact.Deprecated);
+            }
         }
 
-
         //[Test]
-        //public void EmptyGroupCreationTest()
+        //public void TestGroupDBConnectivity()
         //{
-        //    GroupData group = new GroupData("");
-        //    group.Header = "";
-        //    group.Footer = "";
+        //DateTime start = DateTime.Now;
+        //List<GroupData> fromUi = app.Groups.GetGroupList();
+        //DateTime end = DateTime.Now;
+        //System.Console.Out.WriteLine(end.Subtract(start));
 
-        //    List<GroupData> oldGroups = app.Groups.GetGroupList();
-
-        //    app.Groups.CreateG(group);
-
-        //    Assert.AreEqual(oldGroups.Count + 1, app.Groups.GetGroupCount());
-
-        //    List<GroupData> newGroups = app.Groups.GetGroupList();
-        //    oldGroups.Add(group);
-        //    oldGroups.Sort();
-        //    newGroups.Sort();
-        //    Assert.AreEqual(oldGroups, newGroups);
+        //start = DateTime.Now;
+        //List<GroupData> fromDb = GroupData.GetAllGroup();
+        //end = DateTime.Now;
+        //System.Console.Out.WriteLine(end.Subtract(start));
         //}
 
-        //[Test]
-        //public void BadNameGroupCreationTest()
-        //{
-        //GroupData group = new GroupData("a 'a");
-        //group.Header = "";
-        //group.Footer = "";
 
-        //List<GroupData> oldGroups = app.Groups.GetGroupList();
+    //[Test]
+    //public void EmptyGroupCreationTest()
+    //{
+    //    GroupData group = new GroupData("");
+    //    group.Header = "";
+    //    group.Footer = "";
 
-        //app.Groups.CreateG(group);
+    //    List<GroupData> oldGroups = app.Groups.GetGroupList();
 
-        //List<GroupData> newGroups = app.Groups.GetGroupList();
-        //Assert.AreEqual(oldGroups.Count + 1, newGroups.Count);
-        //}
+    //    app.Groups.CreateG(group);
+
+    //    Assert.AreEqual(oldGroups.Count + 1, app.Groups.GetGroupCount());
+
+    //    List<GroupData> newGroups = app.Groups.GetGroupList();
+    //    oldGroups.Add(group);
+    //    oldGroups.Sort();
+    //    newGroups.Sort();
+    //    Assert.AreEqual(oldGroups, newGroups);
+    //}
+
+    //[Test]
+    //public void BadNameGroupCreationTest()
+    //{
+    //GroupData group = new GroupData("a 'a");
+    //group.Header = "";
+    //group.Footer = "";
+
+    //List<GroupData> oldGroups = app.Groups.GetGroupList();
+
+    //app.Groups.CreateG(group);
+
+    //List<GroupData> newGroups = app.Groups.GetGroupList();
+    //Assert.AreEqual(oldGroups.Count + 1, newGroups.Count);
+    //}
     }
 }

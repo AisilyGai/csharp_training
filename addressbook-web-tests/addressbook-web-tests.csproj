@@ -88,10 +88,12 @@
   </Choose>
   <ItemGroup>
     <Compile Include="AddressBookDB.cs" />
+    <Compile Include="tests\AddingContactToGroupTests.cs" />
     <Compile Include="tests\AuthTestBase.cs" />
     <Compile Include="tests\ContactInformationTest.cs" />
     <Compile Include="tests\ContactsModificationTests.cs" />
     <Compile Include="tests\ContactsTestBase.cs" />
+    <Compile Include="tests\GroupContactRelation.cs" />
     <Compile Include="tests\GroupModificationTests.cs" />
     <Compile Include="model\AccountData.cs" />
     <Compile Include="appmanager\ApplicationManager.cs" />
