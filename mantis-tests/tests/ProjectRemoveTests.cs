@@ -10,7 +10,7 @@ namespace mantis_tests
     [TestFixture]
     public class ProjectRemoveTests : AuthTestBase
     {
-        [Test]//, TestCaseSource("RandomDataProvider")]
+        [Test]
         public void ProjectRemoveTest()
         {
             app.project.ProjectElementVerification();
