@@ -45,5 +45,6 @@ namespace mantis_tests
         {
             return Name.GetHashCode();
         }
+        public string Id { get; set; }
     }
 }

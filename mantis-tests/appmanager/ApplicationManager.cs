@@ -32,6 +32,8 @@ namespace mantis_tests
             navigationHelper = new NavigationHelper(this);
             loginHelper = new LoginHelper(this);
             projectHelper = new ProjectHelper(this);
+            Admin = new AdminHelper(this, baseUrl);
+            API = new APIHelper(this);
         }
 
         ~ApplicationManager()
@@ -72,6 +74,8 @@ namespace mantis_tests
         public JamesHelper James { get; set; }
 
         public MailHelper Mail { get; set; }
+        public AdminHelper Admin { get; private set; }
+        internal APIHelper API { get; private set; }
 
         public LoginHelper Auth
         {
