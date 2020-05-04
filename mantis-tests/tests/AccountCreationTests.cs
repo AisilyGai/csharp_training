@@ -7,27 +7,26 @@ using System.IO;
 namespace mantis_tests
 {
     [TestFixture]
-    public class AccountCreationTests : TestBase
+    public class AccountCreationTest : TestBase
     {
         [TestFixtureSetUp]
         public void setUpConfig()
         {
-            app.Ftp.BackupFile("/config_inc.php");
+            app.FTP.BackUpFile("/config_inc.php");
             using (Stream localFile = File.Open("config_inc.php", FileMode.Open))
             {
-                app.Ftp.Upload("/config_inc.php", localFile);
+                app.FTP.Upload("/config_inc.php", localFile);
             }
         }
-        
 
         [Test]
         public void TestAccountRegistration()
         {
             AccountData account = new AccountData()
             {
-                Name = "testuser7",
-                Password = "password",
-                Email = "testuser7@localhost.localdomain"
+                Name = "test18",
+                Password = "test",
+                Email = "test18@localhost.localdomain"
             };
 
             app.James.Delete(account);
@@ -39,8 +38,7 @@ namespace mantis_tests
         [TestFixtureTearDown]
         public void restoreConfig()
         {
-            app.Ftp.RestoreBackupFile("/config_inc.php");
+            app.FTP.RestoreBackUpFile("/config_inc.php");
         }
-
     }
 }

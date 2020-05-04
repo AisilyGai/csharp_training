@@ -8,30 +8,31 @@ using System.Net.FtpClient;
 
 namespace mantis_tests
 {
-    public class FtpHelper : HelperBase 
+    public class FTPHelper : HelperBase
     {
         private FtpClient client;
-
-        public FtpHelper(ApplicationManager manager) : base(manager)
+        public FTPHelper(ApplicationManager manager) : base(manager)
         {
             client = new FtpClient();
-            client.Host = "localhost";
+            client.Host = "localHost";
             client.Credentials = new System.Net.NetworkCredential("mantis", "mantis");
             client.Connect();
         }
-        public void BackupFile(string path)
+
+        public void BackUpFile(string path)
         {
-            String backupPath = path + ".bak";
-            if (client.FileExists(backupPath))
+            string backUpPath = path + ".bak";
+            if (client.FileExists(backUpPath))
             {
                 return;
             }
-            client.Rename(path, backupPath);
+            client.Rename(path, backUpPath);
         }
-        public void RestoreBackupFile(string path)
+
+        public void RestoreBackUpFile(string path)
         {
-            String backupPath = path + ".bak";
-            if (! client.FileExists(backupPath))
+            string backUpPath = path + ".bak";
+            if (!client.FileExists(backUpPath))
             {
                 return;
             }
@@ -39,8 +40,9 @@ namespace mantis_tests
             {
                 client.DeleteFile(path);
             }
-            client.Rename(backupPath, path);
+            client.Rename(backUpPath, path);
         }
+
         public void Upload(string path, Stream localFile)
         {
             if (client.FileExists(path))
@@ -57,6 +59,7 @@ namespace mantis_tests
                     ftpStream.Write(buffer, 0, count);
                     count = localFile.Read(buffer, 0, buffer.Length);
                 }
+
             }
         }
     }

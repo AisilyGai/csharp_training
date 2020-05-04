@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Text.RegularExpressions;
 using OpenQA.Selenium;
+using System.Text.RegularExpressions;
 
 namespace mantis_tests
 {
@@ -17,10 +17,22 @@ namespace mantis_tests
             OpenMainPage();
             OpenRegistrationForm();
             FillRegistrationForm(account);
-            SubmitRegistration();
+            SubmintRegistrationForm();
             String URL = GetConfirmationUrl(account);
-            FillPasswordForm(URL);
-            SubmitPasswordForm();
+            FillPasswordForm(URL, account);
+            SubmintPasswordForm();
+        }
+
+        private void SubmintPasswordForm()
+        {
+            driver.FindElement(By.XPath("input.button")).Click();
+        }
+
+        private void FillPasswordForm(string url, AccountData account)
+        {
+            driver.Url = url;
+            driver.FindElement(By.Name("password")).SendKeys(account.Password);
+            driver.FindElement(By.Name("password_confirm")).SendKeys(account.Password);
         }
 
         private string GetConfirmationUrl(AccountData account)
@@ -30,34 +42,27 @@ namespace mantis_tests
             return match.Value;
         }
 
-        private void FillPasswordForm(string url)
-        {
-            throw new NotImplementedException();
-        }
-
-        private void SubmitPasswordForm()
-        {
-            throw new NotImplementedException();
-        }
-
         private void OpenRegistrationForm()
         {
-            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
+            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(3);
             driver.FindElement(By.LinkText("Зарегистрировать новую учётную запись")).Click();
         }
 
-        private void SubmitRegistration()
+        public void SubmintRegistrationForm()
         {
+            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(3);
             driver.FindElement(By.XPath("//input[2]")).Click();
         }
 
-        private void FillRegistrationForm(AccountData account)
+        public void FillRegistrationForm(AccountData account)
         {
+            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(3);
             driver.FindElement(By.Name("username")).SendKeys(account.Name);
+            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(3);
             driver.FindElement(By.Name("email")).SendKeys(account.Email);
         }
 
-        private void OpenMainPage()
+        public void OpenMainPage()
         {
             manager.Driver.Url = "http://localhost/mantisbt-2.24.0/login_page.php";
         }
